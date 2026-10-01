@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QRNova v2 — Free QR Code Generator</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:Arial,sans-serif}
+header{background:#111827;color:#fff;text-align:center;padding:24px 15px}
+header h1{margin:0;font-size:32px}header p{margin:7px 0 0;color:#cbd5e1}
+main{max-width:850px;margin:24px auto;padding:0 15px}.card{background:#fff;padding:22px;border-radius:18px;margin-bottom:18px;box-shadow:0 8px 28px #0001}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tab{border:0;padding:12px;border-radius:10px;background:#eef2ff;color:#3730a3;font-weight:bold;cursor:pointer}.tab.active{background:#4f46e5;color:#fff}
+label{display:block;font-weight:bold;margin:16px 0 7px}input,textarea,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}textarea{min-height:95px}
+.design{margin-top:18px;background:#f8fafc;padding:15px;border-radius:12px}.colors{display:grid;grid-template-columns:1fr 1fr;gap:12px}.colors input{height:45px;padding:3px}
+.actions{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:18px}.actions button{border:0;border-radius:10px;padding:12px 18px;font-weight:bold;color:#fff;cursor:pointer}.generate{background:#4f46e5}.download{background:#16a34a}.open{background:#0f766e}
+#qrbox{min-height:290px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}#qrbox img{max-width:250px;width:100%;border:10px solid white}
+.note{text-align:center;color:#64748b;font-size:14px}footer{text-align:center;padding:25px;color:#64748b}
+@media(max-width:600px){.tabs{grid-template-columns:repeat(2,1fr)}header h1{font-size:27px}}
+</style>
+</head>
+<body>
+<header><h1>QRNova</h1><p>हर चीज़ का QR, सेकंडों में।</p></header>
+<main>
+<div class="card">
+<h2>QR Code बनाइए</h2>
+<div class="tabs">
+<button class="tab active" onclick="setType('url',this)">🔗 URL</button>
+<button class="tab" onclick="setType('text',this)">📝 Text</button>
+<button class="tab" onclick="setType('phone',this)">📞 Phone</button>
+<button class="tab" onclick="setType('whatsapp',this)">💬 WhatsApp</button>
+<button class="tab" onclick="setType('email',this)">📧 Email</button>
+<button class="tab" onclick="setType('wifi',this)">📶 Wi-Fi</button>
+<button class="tab" onclick="setType('upi',this)">💳 UPI</button>
+<button class="tab" onclick="setType('maps',this)">📍 Maps</button>
+</div>
+<div id="fields"></div>
+<div class="design">
+<h3 style="margin:0 0 10px">🎨 QR Design</h3>
+<div class="colors">
+<div><label style="margin:0 0 6px">QR Color</label><input id="fg" type="color" value="#111827"></div>
+<div><label style="margin:0 0 6px">Background</label><input id="bg" type="color" value="#ffffff"></div>
+</div>
+</div>
+<div class="actions">
+<button class="generate" onclick="generate()">Generate QR</button>
+<button class="download" onclick="downloadQR()">Download PNG</button>
+<button class="open" onclick="openQR()">Open QR</button>
+</div>
+</div>
+<div class="card"><h2 style="text-align:center">आपका QR Code</h2><div id="qrbox"><p class="note">जानकारी भरें और Generate QR दबाएँ।</p></div></div>
+<p class="note">Free QR Generator • QRNova</p>
+</main>
+<footer>© 2026 QRNova</footer>
+
+<script>
+let type='url',currentImg='';
+const templates={
+url:`<label>Website URL</label><input id="v1" placeholder="https://example.com">`,
+text:`<label>Text</label><textarea id="v1" placeholder="अपना text लिखें"></textarea>`,
+phone:`<label>Phone Number</label><input id="v1" placeholder="+919876543210">`,
+whatsapp:`<label>WhatsApp Number</label><input id="v1" placeholder="+919876543210"><label>Message</label><input id="v2" placeholder="Hello!">`,
+email:`<label>Email</label><input id="v1" placeholder="name@example.com"><label>Subject</label><input id="v2"><label>Message</label><textarea id="v3"></textarea>`,
+wifi:`<label>Wi-Fi Name</label><input id="v1"><label>Password</label><input id="v2"><label>Security</label><select id="v3"><option>WPA</option><option>WEP</option><option>nopass</option></select>`,
+upi:`<label>UPI ID</label><input id="v1" placeholder="name@upi"><label>Amount (optional)</label><input id="v2" type="number" placeholder="100">`,
+maps:`<label>Google Maps URL</label><input id="v1" placeholder="https://maps.google.com/...">`
+};
+function setType(t,el){type=t;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('fields').innerHTML=templates[t]}
+setType('url',document.querySelector('.tab'));
+function generate(){
+let a=(document.getElementById('v1')?.value||'').trim(),b=(document.getElementById('v2')?.value||'').trim(),c=(document.getElementById('v3')?.value||'').trim();
+if(!a){alert('कृपया जानकारी भरें।');return}
+let d=a;
+if(type==='phone')d='tel:'+a;
+if(type==='whatsapp')d='https://wa.me/'+a.replace(/\D/g,'')+'?text='+encodeURIComponent(b);
+if(type==='email')d='mailto:'+a+'?subject='+encodeURIComponent(b)+'&body='+encodeURIComponent(c);
+if(type==='wifi')d=`WIFI:T:${c};S:${a};P:${b};;`;
+if(type==='upi')d='upi://pay?pa='+encodeURIComponent(a)+(b?'&am='+encodeURIComponent(b):'')+'&cu=INR';
+let fg=document.getElementById('fg').value.slice(1),bg=document.getElementById('bg').value.slice(1);
+currentImg='https://api.qrserver.com/v1/create-qr-code/?size=500x500&color='+fg+'&bgcolor='+bg+'&data='+encodeURIComponent(d);
+document.getElementById('qrbox').innerHTML='<img id="qrimg" src="'+currentImg+'" alt="QR Code">';
+}
+function openQR(){if(!currentImg){alert('पहले QR बनाइए।');return}window.open(currentImg,'_blank')}
+function downloadQR(){if(!currentImg){alert('पहले QR बनाइए।');return}let a=document.createElement('a');a.href=currentImg;a.download='qrnova-qr.png';a.target='_blank';a.click()}
+</script>
+</body>
+</html>
