@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp QR Code Generator Free Online | QRNova</title>
+<meta name="description" content="Create a free WhatsApp QR code online with QRNova. Add a WhatsApp number and optional message, generate your QR code instantly and download it as PNG.">
+<meta name="keywords" content="WhatsApp QR Code Generator, WhatsApp QR Code, WhatsApp QR Generator Free, WhatsApp QR Code Online">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://myqrnova-283.github.io/qrnova/whatsapp.html">
+<meta property="og:title" content="Free WhatsApp QR Code Generator | QRNova">
+<meta property="og:description" content="Generate a WhatsApp QR code with a custom message and download it as PNG for free.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://myqrnova-283.github.io/qrnova/whatsapp.html">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:linear-gradient(135deg,#128c7e,#25d366);color:#fff;padding:28px 16px;text-align:center}
+header h1{margin:0 0 8px;font-size:30px}header p{margin:0}.container{max-width:760px;margin:22px auto;padding:0 14px}
+.card,.info{background:#fff;border-radius:18px;padding:20px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+label{display:block;font-weight:700;margin:14px 0 7px}input,textarea{width:100%;padding:13px;border:1px solid #ccd5e1;border-radius:10px;font-size:16px}
+textarea{min-height:100px}button{width:100%;border:0;border-radius:10px;padding:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:16px;background:#128c7e;color:#fff}
+#result{text-align:center;margin-top:22px;display:none}#qr{max-width:280px;width:100%;border:1px solid #eee;border-radius:12px;padding:8px}
+.actions{display:flex;gap:10px;margin-top:12px}.actions a{flex:1;text-decoration:none;text-align:center;padding:12px;border-radius:10px;font-weight:700}
+.download{background:#25d366;color:#fff}.open{background:#e8f5f2;color:#128c7e}.nav{text-align:center;margin:18px 0}.nav a{color:#128c7e;font-weight:700}
+h2{font-size:23px}li{margin:9px 0;line-height:1.5}footer{text-align:center;padding:25px 12px;color:#667085;font-size:14px}
+</style></head><body>
+<header><h1>WhatsApp QR Code Generator</h1><p>Create a free WhatsApp QR code online with QRNova</p></header>
+<main class="container"><div class="nav"><a href="index.html">← Back to QRNova</a></div>
+<section class="card">
+<label for="phone">WhatsApp Number</label>
+<input id="phone" type="tel" placeholder="Example: 919876543210">
+<label for="message">Pre-filled WhatsApp Message (Optional)</label>
+<textarea id="message" placeholder="Hello, I would like to know more..."></textarea>
+<button onclick="generateQR()">Generate WhatsApp QR Code</button>
+<div id="result"><h2>Your WhatsApp QR Code</h2><img id="qr" alt="WhatsApp QR Code">
+<div class="actions"><a id="download" class="download" download="whatsapp-qr.png">Download PNG</a><a id="open" class="open" target="_blank" rel="noopener">Open</a></div></div>
+</section>
+<section class="info">
+<h2>What is a WhatsApp QR Code?</h2><p>A WhatsApp QR code lets people open a WhatsApp chat quickly by scanning a QR code. QRNova creates a QR code from your WhatsApp phone number and optional pre-filled message.</p>
+<h2>How to create a WhatsApp QR code</h2><ol><li>Enter your WhatsApp number with country code, without spaces or the plus sign.</li><li>Add an optional message.</li><li>Tap <strong>Generate WhatsApp QR Code</strong>.</li><li>Download the PNG and share or print it.</li></ol>
+<h2>Where can you use it?</h2><ul><li>Business cards and shop counters</li><li>Product packaging and flyers</li><li>Social media profiles and posters</li><li>Customer support and business enquiries</li><li>Events and promotional materials</li></ul>
+<h2>More Free QR Code Tools</h2><p>Use QRNova for URL, text, phone, email, Wi-Fi, UPI and Google Maps QR codes.</p>
+</section></main>
+<footer>© 2026 QRNova — हर चीज़ का QR, सेकंडों में।</footer>
+<script>
+function generateQR(){
+ const phone=document.getElementById('phone').value.trim().replace(/\D/g,'');
+ const message=document.getElementById('message').value.trim();
+ if(!phone){alert('कृपया WhatsApp नंबर दर्ज करें।');return;}
+ if(phone.length<8||phone.length>15){alert('कृपया country code सहित सही WhatsApp नंबर दर्ज करें।');return;}
+ const wa='https://wa.me/'+phone+(message?'?text='+encodeURIComponent(message):'');
+ const qr='https://api.qrserver.com/v1/create-qr-code/?size=600x600&data='+encodeURIComponent(wa);
+ document.getElementById('qr').src=qr;document.getElementById('download').href=qr;document.getElementById('open').href=wa;document.getElementById('result').style.display='block';
+}
+</script></body></html>
