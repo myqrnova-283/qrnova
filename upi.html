@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free UPI QR Code Generator Online | QRNova</title>
+<meta name="description" content="Create a UPI payment QR code online with QRNova. Enter your UPI ID, payee name and optional amount, then generate and download your QR code.">
+<meta name="keywords" content="UPI QR Code Generator, UPI Payment QR Code, Free UPI QR Generator, QRNova">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://myqrnova-283.github.io/qrnova/upi.html">
+<meta property="og:title" content="Free UPI QR Code Generator | QRNova">
+<meta property="og:description" content="Generate a UPI payment QR code with an optional amount.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://myqrnova-283.github.io/qrnova/upi.html">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:linear-gradient(135deg,#5b3cc4,#8b5cf6);color:white;padding:28px 16px;text-align:center}
+header h1{margin:0 0 8px;font-size:29px}.container{max-width:760px;margin:22px auto;padding:0 14px}
+.card,.info{background:white;border-radius:18px;padding:20px;box-shadow:0 8px 25px #00000012;margin-bottom:20px}
+.nav{text-align:center;margin:18px}.nav a{color:#5b3cc4;font-weight:bold}
+label{display:block;font-weight:bold;margin:14px 0 7px}input{width:100%;padding:13px;border:1px solid #ccd5e1;border-radius:10px;font-size:16px}
+button{width:100%;border:0;border-radius:10px;padding:14px;font-size:17px;font-weight:bold;cursor:pointer;margin-top:16px;background:#5b3cc4;color:white}
+#result{text-align:center;margin-top:22px;display:none}#qr{max-width:280px;width:100%;border:1px solid #eee;border-radius:12px;padding:8px}
+.actions{display:flex;gap:10px;margin-top:12px}.actions a{flex:1;text-decoration:none;text-align:center;padding:12px;border-radius:10px;font-weight:bold}
+.download{background:#16a34a;color:white}.open{background:#ede9fe;color:#5b3cc4}
+.notice{background:#fff7ed;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;line-height:1.5}
+h2{font-size:23px}li{margin:9px 0;line-height:1.5}footer{text-align:center;padding:25px 12px;color:#667085;font-size:14px}
+@media(max-width:520px){header h1{font-size:25px}.card,.info{padding:16px}}
+</style></head><body>
+<header><h1>Free UPI QR Code Generator</h1><p>Create a UPI payment QR code with QRNova</p></header>
+<main class="container">
+<div class="nav"><a href="index.html">← Back to QRNova QR Code Generator</a></div>
+<section class="card">
+<label for="upi">UPI ID / VPA</label><input id="upi" type="text" placeholder="Example: yourname@upi" autocomplete="off">
+<label for="name">Payee Name (Optional)</label><input id="name" type="text" placeholder="Example: Your Shop Name">
+<label for="amount">Amount in ₹ (Optional)</label><input id="amount" type="number" min="0.01" step="0.01" placeholder="Example: 100.00" inputmode="decimal">
+<button onclick="generateQR()">Generate UPI QR Code</button>
+<div id="result"><h2>Your UPI QR Code</h2><img id="qr" alt="UPI payment QR code">
+<div class="actions"><a id="download" class="download" download="qrnova-upi-qr.png">Download PNG</a><a id="open" class="open" target="_blank" rel="noopener">Open UPI Link</a></div>
+<p class="notice">Before using this code, scan it with your UPI app and verify the payee details and amount.</p></div>
+</section>
+<section class="info">
+<h2>What is a UPI QR Code?</h2><p>A UPI QR code stores payment details that a compatible payment app can read after scanning. QRNova creates a QR code using your UPI ID, optional payee name and optional amount.</p>
+<h2>How to create a UPI QR code</h2><ol><li>Enter your UPI ID exactly as provided by your bank or payment app.</li><li>Optionally add the payee name and amount.</li><li>Tap <strong>Generate UPI QR Code</strong>.</li><li>Scan and test it using a trusted UPI app before printing or sharing.</li></ol>
+<h2>Where can you use a UPI QR code?</h2><ul><li>Small shops and local businesses</li><li>Freelance services and invoices</li><li>Donation desks and community events</li><li>Printed bills, menus and counters</li></ul>
+<h2>Important payment safety</h2><p class="notice">QRNova does not process payments or verify UPI IDs. Never enter your UPI PIN to receive money. Always confirm the recipient name and amount inside your own UPI app before paying.</p>
+<h2>More Free QR Code Tools</h2><p>Visit the <a href="index.html">QRNova homepage</a> for URL, text, WhatsApp, Wi-Fi, phone, email and Google Maps QR code tools.</p>
+</section></main>
+<footer>© 2026 QRNova — हर चीज़ का QR, सेकंडों में।</footer>
+<script>
+function generateQR(){
+ const upi=document.getElementById('upi').value.trim();
+ const name=document.getElementById('name').value.trim();
+ const amountValue=document.getElementById('amount').value.trim();
+ if(!upi){alert('कृपया अपनी UPI ID दर्ज करें।');return;}
+ if(!/^[^\\s@]+@[^\\s@]+$/.test(upi)){alert('कृपया सही UPI ID दर्ज करें, जैसे name@upi।');return;}
+ if(amountValue&&(!Number.isFinite(Number(amountValue))||Number(amountValue)<=0)){alert('कृपया ₹ में सही राशि दर्ज करें।');return;}
+ const params=new URLSearchParams();params.set('pa',upi);if(name)params.set('pn',name);
+ if(amountValue)params.set('am',Number(amountValue).toFixed(2));params.set('cu','INR');
+ const upiLink='upi://pay?'+params.toString();
+ const qrUrl='https://api.qrserver.com/v1/create-qr-code/?size=600x600&data='+encodeURIComponent(upiLink);
+ document.getElementById('qr').src=qrUrl;document.getElementById('download').href=qrUrl;
+ document.getElementById('open').href=upiLink;document.getElementById('result').style.display='block';
+}
+</script></body></html>
